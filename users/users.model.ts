@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     passwrod: {
-        type: String
+        type: String,
+        select: false
     }
 })
 
