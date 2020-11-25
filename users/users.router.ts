@@ -16,12 +16,14 @@ class UsersRouter extends Router {
             User
                 .find()
                 .then(this.render(resp, next))
+                .catch(next)
         })
 
         application.get('/users/:id', (req, resp, next) => {
             User
                 .findById(req.params.id)
                 .then(this.render(resp, next))
+                .catch(next)
         })
 
         application.post('/users', (req, resp, next) => {
@@ -29,6 +31,7 @@ class UsersRouter extends Router {
             user
                 .save()
                 .then(this.render(resp, next))
+                .catch(next)
         })
 
         application.put('/users/:id', (req, resp, next) => {
@@ -45,6 +48,7 @@ class UsersRouter extends Router {
                     }
                 })
                 .then(this.render(resp, next))
+                .catch(next)
         })
 
         application.patch('/users/:id', (req, resp, next) => {
@@ -52,6 +56,7 @@ class UsersRouter extends Router {
             User
                 .findByIdAndUpdate(req.params.id, req.body, options)
                 .then(this.render(resp, next))
+                .catch(next)
         })
 
         application.del('/users/:id', (req, resp, next) => {
@@ -66,6 +71,7 @@ class UsersRouter extends Router {
                     }
                     return next()
                 })
+                .catch(next)
         })
     }
 
