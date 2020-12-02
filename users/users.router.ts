@@ -14,11 +14,11 @@ class UsersRouter extends ModelRouter<User> {
 
     applyRoutes(application: restify.Server ) {
         application.get('/users', this.findAll)
-        application.get('/users/:id',this.findById)
+        application.get('/users/:id',[this.validateId, this.findById])
         application.post('/users', this.save)
-        application.put('/users/:id', this.replace)
-        application.patch('/users/:id', this.update)
-        application.del('/users/:id', this.delete)
+        application.put('/users/:id', [this.validateId, this.replace])
+        application.patch('/users/:id', [this.validateId, this.update])
+        application.del('/users/:id', [this.validateId, this.delete])
     }
 
 }
