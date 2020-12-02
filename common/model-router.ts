@@ -11,7 +11,7 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
     findAll = (req, resp, next) => {
         this.model
             .find()
-            .then(this.render(resp, next))
+            .then(this.renderAll(resp, next))
             .catch(next)
     }
 
