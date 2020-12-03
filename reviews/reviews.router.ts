@@ -9,13 +9,10 @@ class ReviewsRouter extends ModelRouter<Review>{
         super(Review)
     }
 
-    findById = (req, resp, next) => {
-        this.model
-            .findById(req.params.id)
-            .populate('user', ['name','email'])
-            .populate('restaurant')
-            .then(this.render(resp, next))
-            .catch(next)
+    protected prepareOne(query: mongoose.DocumentQuery<Review, Review>): mongoose.DocumentQuery<Review, Review> {
+        return query
+                .populate('user', ['name', 'email'])
+                .populate('restaurant')
     }
 
     applyRoutes(application: restify.Server) {
