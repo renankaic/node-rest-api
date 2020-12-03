@@ -35,3 +35,5 @@ const reviewSchema = new mongoose.Schema({
         required:true
     }
 })
+
+const Review = mongoose.model<Review>('Review', reviewSchema)
