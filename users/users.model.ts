@@ -2,10 +2,15 @@ import * as mongoose from 'mongoose'
 import { validateCPF } from '../common/validators'
 import * as bcrypt from 'bcrypt'
 import { environment } from '../common/environment'
+
 export interface User extends mongoose.Document {
     name: string
     email: string
     password: string
+}
+
+export interface UserModel extends mongoose.Model<User> {
+    findByEmail(email: string): Promise<User>
 }
 
 const userSchema = new mongoose.Schema({
@@ -41,6 +46,10 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+userSchema.statics.findByEmail = function(email: string) {
+    return this.findOne({email}) //{email : email}
+}
+
 const hashpassword = (obj, next) => {
 
     bcrypt
@@ -74,4 +83,4 @@ userSchema.pre('save', saveMiddleware)
 userSchema.pre('findOneAndUpdate', updateMiddleware)
 userSchema.pre('update', updateMiddleware)
 
-export const User = mongoose.model<User>('User', userSchema, 'users')
+export const User = mongoose.model<User, UserModel>('User', userSchema, 'users')

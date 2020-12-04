@@ -15,7 +15,8 @@ class UsersRouter extends ModelRouter<User> {
     findByEmail = (req, resp, next) => {
         if(req.query.email) {
             User
-                .find({ email: req.query.email})
+                .findByEmail(req.query.email)
+                .then(user => user ? [user] : [])
                 .then(this.renderAll(resp, next))
                 .catch(next)
         } else {
@@ -24,7 +25,7 @@ class UsersRouter extends ModelRouter<User> {
     }
 
     applyRoutes(application: restify.Server ) {
-        
+
         //Specify the version by using 'accept-version' header
 
         application.get({ path: '/users', version: '2.0.0' }, [this.findByEmail, this.findAll])
