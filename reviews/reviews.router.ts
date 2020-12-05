@@ -15,6 +15,13 @@ class ReviewsRouter extends ModelRouter<Review>{
                 .populate('restaurant')
     }
 
+    envelope(document) {
+        let resource = super.envelope(document)
+        const restaurantId = document.restaurant._id ? document.restaurant._id : document.restaurant
+        resource._links.restaurant = `/restaurants/${restaurantId}`
+        return resource
+    }
+
     applyRoutes(application: restify.Server) {
         application.get(`${this.basePath}`, this.findAll)
         application.get(`${this.basePath}/:id`, [this.validateId, this.findById])
