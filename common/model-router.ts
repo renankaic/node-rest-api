@@ -6,6 +6,8 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 
     basePath: string
 
+    pageSize: number = 4
+
     constructor(protected model: mongoose.Model<D>) {
         super()
         this.basePath = `/${model.collection.name}`
@@ -30,8 +32,15 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
     }
 
     findAll = (req, resp, next) => {
-        this.model
+        let page = parseInt(req.query._page || 1)
+        page = page > 0 ? page : 1
+
+        const skip = (page - 1) * this.pageSize
+
+        this.model            
             .find()
+            .skip(skip)
+            .limit(this.pageSize)
             .then(this.renderAll(resp, next))
             .catch(next)
     }
