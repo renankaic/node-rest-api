@@ -47,3 +47,7 @@ test('post /users', () => {
         })
         .catch(fail)
 })
+
+afterAll(() => {
+    return server.shutdown()
+})
