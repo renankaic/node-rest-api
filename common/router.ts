@@ -22,7 +22,7 @@ export abstract class Router extends EventEmitter {
             } else {
                 throw new NotFoundError()
             }
-            return next()
+            return next(false)
         }
     }
 
