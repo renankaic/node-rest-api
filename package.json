@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "jest": {
+    "globals": {
+      "address":"http://localhost:3001"
+    },
     "testEnvironment": "node",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
