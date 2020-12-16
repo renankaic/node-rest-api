@@ -6,6 +6,7 @@ import { environment } from './common/environment'
 import { usersRouter } from './users/users.router'
 import { reviewsRouter } from './reviews/reviews.router'
 import { Review } from './reviews/reviews.model'
+import { restaurantsRouter } from './restaurants/restaurants.router'
 
 let server: Server
 
@@ -16,6 +17,7 @@ const beforeAllTests = () => {
     return server
         .bootstrap([
             usersRouter,
+            restaurantsRouter,
             reviewsRouter
         ])
         .then(() => User.remove({}).exec())
