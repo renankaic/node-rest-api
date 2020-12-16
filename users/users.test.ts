@@ -50,6 +50,15 @@ test('post /users', () => {
         .catch(fail)
 })
 
+test('get /users/aaaaa - not found', () => {
+    return request(address)
+        .get('/users/aaaaa')
+        .then(response => {
+            expect(response.status).toBe(404)
+        })
+        .catch(fail)
+})
+
 afterAll(() => {
     return server.shutdown()
 })
