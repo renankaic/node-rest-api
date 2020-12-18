@@ -7,6 +7,9 @@ export interface User extends mongoose.Document {
     name: string
     email: string
     password: string
+    cpf: string
+    gender: string
+    matches(password: string): boolean
 }
 
 export interface UserModel extends mongoose.Model<User> {
