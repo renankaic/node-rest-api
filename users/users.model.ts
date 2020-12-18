@@ -50,6 +50,10 @@ userSchema.statics.findByEmail = function(email: string, projection: string) {
     return this.findOne({email}, projection) //{email : email}
 }
 
+userSchema.methods.matches = function(password: string) : boolean {
+    return bcrypt.compareSync(password, this.password)
+}
+
 const hashpassword = (obj, next) => {
 
     bcrypt
