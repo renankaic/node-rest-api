@@ -10,7 +10,7 @@ export interface User extends mongoose.Document {
 }
 
 export interface UserModel extends mongoose.Model<User> {
-    findByEmail(email: string): Promise<User>
+    findByEmail(email: string, projection?: string): Promise<User>
 }
 
 const userSchema = new mongoose.Schema({
@@ -46,8 +46,8 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.statics.findByEmail = function(email: string) {
-    return this.findOne({email}) //{email : email}
+userSchema.statics.findByEmail = function(email: string, projection: string) {
+    return this.findOne({email}, projection) //{email : email}
 }
 
 const hashpassword = (obj, next) => {
