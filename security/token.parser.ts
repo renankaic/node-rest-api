@@ -40,7 +40,7 @@ function applyBearer (req: restify.Request, next): (error, decoded) => void {
                 .then(user => {
                     if(user) {
                         //associar usuario no request
-                        (<any>req).authenticated = user
+                        req.authenticated = user
                     }
                     next()
                 })
