@@ -56,13 +56,13 @@ class UsersRouter extends ModelRouter<User> {
         ])
 
         application.put(`${this.basePath}/:id`, [
-            authorize('admin'),
+            authorize('admin', 'user'),
             this.validateId, 
             this.replace
         ])
 
         application.patch(`${this.basePath}/:id`, [
-            authorize('admin'),
+            authorize('admin', 'user'),
             this.validateId, 
             this.update
         ])
