@@ -1,11 +1,13 @@
 import "jest"
 import * as request from 'supertest'
 
-let address: string = (<any>global).address
+const address: string = (<any>global).address
+const auth: string = (<any>global).auth
 
 test('get /restaurants', () => {
     return request(address)
         .get('/restaurants')
+        .set('Authorization', auth)
         .then(response => {
             expect(response.status).toBe(200)
             expect(response.body.items).toBeInstanceOf(Array)
@@ -15,6 +17,7 @@ test('get /restaurants', () => {
 test('post /restaurants', () => {
     return request(address)
         .post('/restaurants')
+        .set('Authorization', auth)
         .send({
             name: "Restaurant POST test"
         })
@@ -30,6 +33,7 @@ test('post /restaurants', () => {
 test('get /restaurants/aaaa - not found', () => {
     return request(address)
         .get('/restaurants/aaaa')
+        .set('Authorization', auth)
         .then(response => {
             expect(response.status).toBe(404)
         })
@@ -40,6 +44,7 @@ test('patch /restaurants', () => {
     let restaurantId
     return request(address)
         .post('/restaurants')
+        .set('Authorization', auth)
         .send({
             name: "Restaurant PATCH test"
         })
@@ -47,6 +52,7 @@ test('patch /restaurants', () => {
             restaurantId = response.body._id
             return request(address)
                 .patch(`/restaurants/${restaurantId}`)
+                .set('Authorization', auth)
                 .send({
                     name: "Restaurant PATCH OK"
                 })
@@ -62,6 +68,7 @@ test('add menu item to restaurant and checks its menu', () => {
     let restaurantId
     return request(address)
         .post('/restaurants')
+        .set('Authorization', auth)
         .send({
             name: "Restaurant with menu items"
         })
@@ -71,6 +78,7 @@ test('add menu item to restaurant and checks its menu', () => {
 
             return request(address)
                 .put(`/restaurants/${restaurantId}/menu`)
+                .set('Authorization', auth)
                 .send([
                     { name: 'X-Burger', price: 12.50 },
                     { name: 'X-Salad', price: 15.90 }
@@ -81,7 +89,8 @@ test('add menu item to restaurant and checks its menu', () => {
             expect(response.body.length).toBe(2)
 
             return request(address)
-                .get(`/restaurants/${restaurantId}/menu`)                
+                .get(`/restaurants/${restaurantId}/menu`)
+                .set('Authorization', auth)             
         })
         .then(response => {
             expect(response.body).toBeInstanceOf(Array)

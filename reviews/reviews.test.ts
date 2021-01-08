@@ -1,11 +1,13 @@
 import "jest"
 import * as request from 'supertest'
 
-let address: string = (<any>global).address
+const address: string = (<any>global).address
+const auth: string = (<any>global).auth
 
 test('get /reviews', () => {
     return request(address)
         .get('/reviews')
+        .set('Authorization', auth)
         .then(response => {
             expect(response.status).toBe(200)
             expect(response.body.items).toBeInstanceOf(Array)
@@ -20,6 +22,7 @@ test('post /reviews', () => {
 
     return request(address)
         .post('/users')
+        .set('Authorization', auth)
         .send({
             name: 'usuario-review',
             email: 'usuario-review@email.com',
@@ -29,6 +32,7 @@ test('post /reviews', () => {
             userId = response.body._id
             return request(address)
                     .post('/restaurants')
+                    .set('Authorization', auth)
                     .send({
                         name: "Review Restaurant"
                     })
@@ -37,6 +41,7 @@ test('post /reviews', () => {
             restaurantId = response.body._id
             return request(address)
                 .post('/reviews')
+                .set('Authorization', auth)
                 .send({
                     date: date,
                     rating: 3,
@@ -62,6 +67,7 @@ test('post /reviews', () => {
 test('get /reviews/aaaaa - not found', () => {
     return request(address)
         .get('/reviews/aaaaa')
+        .set('Authorization', auth)
         .then(response => {
             expect(response.status).toBe(404)
         })
@@ -76,6 +82,7 @@ test('patch /reviews/:id - not allowed', () => {
 
     return request(address)
         .post('/users')
+        .set('Authorization', auth)
         .send({
             name: 'usuario-review-patch',
             email: 'usuario-review-patch@email.com',
@@ -85,6 +92,7 @@ test('patch /reviews/:id - not allowed', () => {
             userId = response.body._id
             return request(address)
                 .post('/restaurants')
+                .set('Authorization', auth)
                 .send({
                     name: "Review Restaurant Patch Test"
                 })
@@ -93,6 +101,7 @@ test('patch /reviews/:id - not allowed', () => {
             restaurantId = response.body._id
             return request(address)
                 .post('/reviews')
+                .set('Authorization', auth)
                 .send({
                     date: date,
                     rating: 4,
@@ -106,6 +115,7 @@ test('patch /reviews/:id - not allowed', () => {
 
                     return request(address)
                         .patch(`/reviews/${reviewId}`)
+                        .set('Authorization', auth)
                         .send({
                             date,
                             comments: "Patch Not Allowed",
