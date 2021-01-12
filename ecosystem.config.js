@@ -5,6 +5,7 @@ module.exports = {
     instances: 2,
     exec_mode: "cluster",
     watch: true,
+    merge_logs: true,
     env: {
       //Environment variables for the application
       SERVER_PORT: 5000,
