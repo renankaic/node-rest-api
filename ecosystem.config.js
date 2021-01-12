@@ -2,8 +2,9 @@ module.exports = {
   apps : [{
     name   : "meat-api",
     script : "./dist/main.js",
-    instances: 0,
+    instances: 2,
     exec_mode: "cluster",
+    watch: true,
     env: {
       //Environment variables for the application
       SERVER_PORT: 5000,
