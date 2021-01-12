@@ -56,10 +56,15 @@ export class Server {
                 })
 
                 this.application.on('restifyError', handleError)
-                this.application.on('after', restify.plugins.auditLogger({
-                    log: logger,
-                    event: 'after'
-                }))
+                // this.application.on('after', restify.plugins.auditLogger({
+                //     log: logger,
+                //     event: 'after',
+                //     server: this.application
+                // }))
+
+                // this.application.on('audit', data => {
+
+                // })
 
             } catch (error) {
                 reject(error)
